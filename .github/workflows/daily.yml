@@ -1,0 +1,18 @@
+name: Future Test India Automation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 3 * * *"
+
+jobs:
+  automation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run automation
+        run: |
+          echo "Future Test India automation is running."
+          echo "Video generation and publishing are not configured yet."
