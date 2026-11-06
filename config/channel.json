@@ -1,0 +1,22 @@
+{
+  "channel_name": "Future Test India",
+  "channel_handle": "@FutureTestIndia",
+  "content_category": "AI and Technology",
+  "languages": [
+    "Hindi",
+    "Punjabi"
+  ],
+  "voiceover": "Bilingual Hindi and Punjabi",
+  "subtitles": true,
+  "target_audience": [
+    "Hindi-speaking audience",
+    "Punjabi-speaking audience"
+  ],
+  "content_types": [
+    "AI Technology",
+    "Future Experiments",
+    "Technology News",
+    "AI Tutorials"
+  ],
+  "default_video_visibility": "private"
+}
