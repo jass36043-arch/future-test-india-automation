@@ -1,18 +1,65 @@
-name: Future Test India Automation
+name: Future Test India Daily Automation
 
 on:
   workflow_dispatch:
   schedule:
     - cron: "30 3 * * *"
 
+permissions:
+  contents: write
+
 jobs:
   automation:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run automation
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Create Hindi Punjabi daily draft
         run: |
-          echo "Future Test India automation is running."
-          echo "Video generation and publishing are not configured yet."
+          mkdir -p content
+          python - <<'PY'
+          from datetime import date
+
+          today = date.today().isoformat()
+
+          text = f"""# Future Test India
+          Date: {today}
+
+          ## Video Topic
+          AI and Technology - Today's Future Update
+
+          ## Hindi Voiceover
+          नमस्कार दोस्तों! स्वागत है Future Test India में।
+          आज हम AI और नई टेक्नोलॉजी की दुनिया की एक दिलचस्प जानकारी जानेंगे।
+          वीडियो पसंद आए तो चैनल को सब्सक्राइब जरूर करें।
+
+          ## Punjabi Voiceover
+          ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਦੋਸਤੋ! Future Test India ਵਿੱਚ ਤੁਹਾਡਾ ਸਵਾਗਤ ਹੈ।
+          ਅੱਜ ਅਸੀਂ AI ਅਤੇ ਨਵੀਂ ਤਕਨਾਲੋਜੀ ਬਾਰੇ ਇੱਕ ਦਿਲਚਸਪ ਜਾਣਕਾਰੀ ਜਾਣਾਂਗੇ।
+          ਵੀਡੀਓ ਪਸੰਦ ਆਵੇ ਤਾਂ ਚੈਨਲ ਨੂੰ ਸਬਸਕ੍ਰਾਈਬ ਜ਼ਰੂਰ ਕਰੋ।
+
+          ## Audience
+          Hindi-speaking and Punjabi-speaking viewers.
+
+          ## Status
+          Draft only. AI video generation and YouTube upload are not configured yet.
+          """
+
+          with open("content/daily-draft.md", "w", encoding="utf-8") as f:
+              f.write(text)
+          PY
+
+      - name: Save daily draft
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/daily-draft.md
+          git commit -m "Create bilingual daily video draft" || echo "No changes"
+          git push
